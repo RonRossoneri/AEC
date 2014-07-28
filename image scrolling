@@ -1,0 +1,92 @@
+<?php
+    if (isset($_FILES['imageupload']))  {
+    	//if the form has been submitted
+    	$imagename = $_FILES['imageupload'] ['name'];
+       	$imagetemp = $_FILES['imageupload'] ['tmp_name'];
+    	$imagetype = $_FILES['imageupload'] ['type'];
+    	//filter the name
+    	$imagename = preg_replace("#[^a-z0-9.]#i", "", $imagename);
+
+    	//error handling
+    	if(!imagetemp) {
+    		echo("You need to select a file to upload");
+    	}else {
+    		move_uploaded_file($imagetemp, "./uploads/$imagename");
+    	}
+    }
+
+ ?>
+
+
+
+
+<DOCTYPE html>
+<html>
+
+<head>
+
+<title>
+	JQuery Slider
+</title>
+<style type="text/css">
+.slider{
+	width: 500px;	
+	height: 400px;
+	overflow: hidden;
+	margin: 30px auto;
+
+}
+.slider img{
+	width: 500px;
+	height: 400px;
+	display: none;
+
+}
+</style>
+
+<script type="text/javascript"  src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
+<script type="text/javascript"  src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+
+<script type="text/javascript">
+function Slider(){
+	$(".slider #1").show("fade", 500);
+	$(".slider #1").delay(5000).hide("slide",{direction:"left"}, 500);
+
+	var sc=$(".slider img").size();
+	var count = 2;
+	setInterval(function(){
+		$(".slider #" + count).show ("slide",{direction:"right"},500);
+		$(".slider #" + count).delay(5000).hide("slide",{direction:"left"}, 500);
+		if (count == sc) {
+			count=1;
+		}else{
+			count=count+1;
+		}
+	},6500)
+
+}
+</script>
+
+
+</head>
+<body onload="Slider();">
+	<form action = "test.php" method="post" enctype="multipart/form-data">
+		<input type = "file" name = "imageupload"> Selet a file to upload...<br/><br>
+		<input type = "submit" value = "upload">
+
+
+	</form>
+
+
+
+	<div class="slider">
+    <div class="slider">
+					<a href="index.php"><img id="1" src="./img/1.jpg" border = "0" alt = "Helping Develop"/></a>
+					<a href="index.php"><img id="2" src="./img/2.jpg" border = "0" alt = "Helping Develop"/></a>
+					<a href="index.php"><img id="3" src="./img/3.jpg" border = "0" alt = "Helping Develop"/></a>
+				</div>
+
+
+</body>
+</html>
